@@ -1,0 +1,45 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/RequestInfoServlet")
+public class RequestInfoServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        // Client information
+        out.println("<h2>Client Information:</h2>");
+        out.println("<ul>");
+        out.println("<li>IP Address: " + request.getRemoteAddr() + "</li>");
+        out.println("<li>Browser Type: " + request.getHeader("User-Agent") + "</li>");
+        out.println("</ul>");
+
+        // Server information
+        out.println("<h2>Server Information:</h2>");
+        out.println("<ul>");
+        out.println("<li>Server Name: " + request.getServerName() + "</li>");
+        out.println("<li>Server Port: " + request.getServerPort() + "</li>");
+        out.println("<li>Servlets Loaded:");
+        Enumeration<String> servletNames = getServletContext().getServletNames();
+        while (servletNames.hasMoreElements()) {
+            out.println("<li>" + servletNames.nextElement() + "</li>");
+        }
+        out.println("</ul>");
+
+        out.close();
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
+}
+

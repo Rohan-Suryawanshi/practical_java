@@ -1,0 +1,42 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Prime Number Checker</title>
+</head>
+<body>
+    <h1>Prime Number Checker</h1>
+    <form method="post">
+        Enter a number: <input type="text" name="number">
+        <input type="submit" value="Check">
+    </form>
+    
+    <% 
+        // Check if form is submitted
+        if (request.getMethod().equals("POST")) {
+            // Get the number entered by the user
+            int number = Integer.parseInt(request.getParameter("number"));
+            
+            // Variable to store whether the number is prime
+            boolean isPrime = true;
+            
+            // Check if the number is divisible by any number other than 1 and itself
+            for (int i = 2; i <= Math.sqrt(number); i++) {
+                if (number % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            
+            // Display the result in red color
+            if (isPrime) { %>
+                <p style="color: red;"><%= number %> is a prime number.</p>
+            <% } else { %>
+                <p style="color: red;"><%= number %> is not a prime number.</p>
+            <% }
+        }
+    %>
+</body>
+</html>
+

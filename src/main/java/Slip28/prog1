@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reverse String</title>
+</head>
+<body>
+    <h1>Reverse String</h1>
+    <form action="reverseString.jsp" method="post">
+        Enter a string: <input type="text" name="inputString"><br>
+        <input type="submit" value="Reverse">
+    </form>
+
+    <%-- JSP scriptlet to handle form submission --%>
+    <% 
+        // Check if the form has been submitted
+        if ("POST".equals(request.getMethod())) {
+            // Retrieve the input string from the form
+            String inputString = request.getParameter("inputString");
+
+            if (inputString != null) {
+                // Reverse the input string
+                String reversedString = new StringBuilder(inputString).reverse().toString();
+
+                // Display the reversed string
+    %>
+                <h2>Reversed String:</h2>
+                <p><%= reversedString %></p>
+    <% 
+            }
+        } 
+    %>
+</body>
+</html>
+

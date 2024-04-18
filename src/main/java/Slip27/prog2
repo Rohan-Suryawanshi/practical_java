@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Change Session Timeout</title>
+</head>
+<body>
+    <h1>Change Session Timeout</h1>
+    <form action="ChangeSessionTimeoutServlet" method="post">
+        New Timeout (in seconds): <input type="text" name="timeout"><br>
+        <input type="submit" value="Change Timeout">
+    </form>
+</body>
+</html>
+
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/ChangeSessionTimeoutServlet")
+public class ChangeSessionTimeoutServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get the new timeout value from the form
+        String timeoutString = request.getParameter("timeout");
+        int newTimeout = Integer.parseInt(timeoutString);
+
+        // Get the session
+        HttpSession session = request.getSession();
+
+        // Set the new timeout value for the session
+        session.setMaxInactiveInterval(newTimeout);
+
+        // Redirect to a confirmation page
+        response.sendRedirect("timeoutChanged.jsp");
+    }
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Session Timeout Changed</title>
+</head>
+<body>
+    <h1>Session Timeout Changed</h1>
+    <p>The session timeout has been successfully changed.</p>
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voter Eligibility Checker</title>
+</head>
+<body>
+    <h1>Voter Eligibility Checker</h1>
+    <form action="checkEligibility.jsp" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+        <input type="submit" value="Check Eligibility">
+    </form>
+</body>
+</html>
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Voter Eligibility Result</title>
+</head>
+<body>
+    <h1>Voter Eligibility Result</h1>
+    <% 
+        // Retrieve the values of name and age from the request
+        String name = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+        
+        // Check eligibility based on age
+        String result;
+        if (age >= 18) {
+            result = "Congratulations, " + name + "! You are eligible to vote.";
+        } else {
+            result = "Sorry, " + name + ". You are not eligible to vote yet.";
+        }
+    %>
+    <p><%= result %></p>
+</body>
+</html>
+

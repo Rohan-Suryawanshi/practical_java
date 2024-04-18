@@ -1,0 +1,49 @@
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    int number = Integer.parseInt(request.getParameter("number"));
+    boolean isPerfect = false;
+
+    // Check if the number is perfect
+    int sum = 0;
+    for (int i = 1; i < number; i++) {
+        if (number % i == 0) {
+            sum += i;
+        }
+    }
+    if (sum == number) {
+        isPerfect = true;
+    }
+%>
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Perfect Number Checker</title>
+</head>
+<body>
+    <h1>Perfect Number Checker</h1>
+    <form method="post" action="CheckPerfectNumber.jsp">
+        Enter a number: <input type="text" name="number">
+        <input type="submit" value="Check">
+    </form>
+
+    <%@ include file="PerfectNumberChecker.jsp" %>
+
+    <%
+        // Display the result
+        if (request.getParameter("number") != null) {
+            String number = request.getParameter("number");
+            if (isPerfect) { %>
+                <p style="color: green;"><%= number %> is a perfect number.</p>
+            <% } else { %>
+                <p style="color: red;"><%= number %> is not a perfect number.</p>
+            <% }
+        }
+    %>
+</body>
+</html>
+

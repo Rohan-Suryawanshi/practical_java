@@ -1,0 +1,61 @@
+<%@ page import="java.sql.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Details</title>
+</head>
+<body>
+    <h1>Patient Details</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Patient No</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Disease</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+                // Database connection details
+                String url = "jdbc:postgresql://localhost:5432/your_database"; // Replace 'your_database' with your actual database name
+                String username = "username"; // Replace 'username' with your actual username
+                String password = "password"; // Replace 'password' with your actual password
+
+                // Establish database connection
+                Connection connection = DriverManager.getConnection(url, username, password);
+                
+                // Create SQL query to retrieve patient details
+                String sql = "SELECT * FROM Patient";
+                Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+                
+                // Iterate through the result set and display patient details in table rows
+                while (resultSet.next()) {
+                    int pno = resultSet.getInt("PNo");
+                    String pname = resultSet.getString("PName");
+                    String address = resultSet.getString("Address");
+                    int age = resultSet.getInt("Age");
+                    String disease = resultSet.getString("Disease");
+            %>
+                <tr>
+                    <td><%= pno %></td>
+                    <td><%= pname %></td>
+                    <td><%= address %></td>
+                    <td><%= age %></td>
+                    <td><%= disease %></td>
+                </tr>
+            <% 
+                }
+                // Close resources
+                resultSet.close();
+                statement.close();
+                connection.close();
+            %>
+        </tbody>
+    </table>
+</body>
+</html>
+
